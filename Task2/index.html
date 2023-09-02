@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Rajesh Kumar Calculator.">
+    <meta name="author" content="Rajesh Kumar">
+    <title>Calculator- Rajesh Kumar</title>
+    <!-- font icons -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Courier New", Courier, monospace;
+        }
+
+        body {
+            display: flex;
+            height: 100vh;
+            align-items: center;
+            justify-content: center;
+            /* background-color: #302929; */
+        }
+
+        .container {
+            position: relative;
+            min-width: 300px;
+            min-height: 400px;
+            padding: 40px 30px 30px;
+            border-radius: 20px;
+            box-shadow: 25px 25px 75px rgba(0, 0, 0, 0.25),
+                10px 10px 70px rgba(0, 0, 0, 0.25), inset -5px -5px 15px rgba(0, 0, 0, 0.25),
+                inset 5px 5px 15px rgba(0, 0, 0, 0.25);
+        }
+
+        .container span {
+            color: #fff;
+            position: relative;
+            display: grid;
+            width: 80px;
+            place-items: center;
+            margin: 8px;
+            height: 80px;
+            background: linear-gradient(180deg, #2f2f2f, #3f3f3f);
+            box-shadow: inset -8px 0 8px rgba(0, 0, 0, 0.15),
+                inset 0 -8px 8px rgba(0, 0, 0, 0.25), 0 0 0 2px rgba(0, 0, 0, 0.75),
+                10px 20px 25px rgba(0, 0, 0, 0.4);
+            user-select: none;
+            cursor: pointer;
+            font-weight: 400;
+            border-radius: 10px;
+        }
+
+        .calculator span:active {
+            filter: brightness(1.5);
+        }
+
+        .calculator span::before {
+            content: "";
+            position: absolute;
+            top: 3px;
+            left: 4px;
+            bottom: 14px;
+            right: 12px;
+            border-radius: 10px;
+            /* background: linear-gradient(90deg, #2d2d2d, #4d4d4d); */
+            box-shadow: -5px -5px 15px rgba(0, 0, 0, 0.1),
+                10px 5px 10px rgba(0, 0, 0, 0.15);
+            border-left: 1px solid #0004;
+            border-bottom: 1px solid #0004;
+            border-top: 1px solid #0009;
+        }
+
+        .calculator span {
+            position: relative;
+            font-style: normal;
+            font-size: 1.5em;
+            text-transform: uppercase;
+        }
+
+        .calculator {
+            position: relative;
+            display: grid;
+        }
+
+        .calculator .value {
+            position: relative;
+            grid-column: span 4;
+            height: 100px;
+            width: calc(100% - 20px);
+            left: 10px;
+            border: none;
+            outline: none;
+            background-color: #a7af7c;
+            color: white;
+            margin-bottom: 10px;
+            border-radius: 10px;
+            box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.75);
+            text-align: right;
+            padding: 10px;
+            font-size: 2em;
+        }
+
+        .calculator .clear {
+            grid-column: span 2;
+            width: 180px;
+            background: #f00;
+        }
+
+        .calculator .clear::before {
+            background: linear-gradient(90deg, #d20000, #ffffff5c);
+            border-left: 1px solid #fff4;
+            border-bottom: 1px solid #fff4;
+            border-top: 1px solid #fff4;
+        }
+
+        .calculator .plus {
+            grid-row: span 2;
+            height: 180px;
+        }
+
+        .calculator .equal {
+            background: #2196f3;
+        }
+
+        .calculator .equal::before {
+            background: linear-gradient(90deg, #1479c9, #ffffff5c);
+            border-left: 1px solid #fff4;
+            border-bottom: 1px solid #fff4;
+            border-top: 1px solid #fff4;
+        }
+    </style>
+</head>
+
+<body data-spy="scroll" data-target=".navbar" data-offset="40" id="home" class="bg-dark text-light">
+    <section>
+        <div class="container">
+            <form action="" name="calc" class="calculator">
+                <input type="text" class="value" name="txt" />
+                <span class="num clear">AC</span>
+                <span class="num">/</span>
+                <span class="num">*</span>
+                <span class="num">7</span>
+                <span class="num">8</span>
+                <span class="num">9</span>
+                <span class="num">-</span>
+                <span class="num">4</span>
+                <span class="num">5</span>
+                <span class="num">6</span>
+                <span class="num plus">+</span>
+                <span class="num">1</span>
+                <span class="num">2</span>
+                <span class="num">3</span>
+                <span class="num">0</span>
+                <span class="num">00</span>
+                <span class="num">.</span>
+
+                <span class="num">=</span>
+            </form>
+        </div>
+    </section>
+
+    <script>
+        let string = " ";
+        let buttons = document.querySelectorAll(".num");
+        Array.from(buttons).forEach((button) => {
+            button.addEventListener('click', (e) => {
+                try {
+                    if (e.target.innerHTML == '=') {
+                        string = eval(string);
+                        if (string == Infinity || string == -Infinity) {
+                            document.querySelector('input').value = "Divisible By Zero";
+                        } else {
+                            document.querySelector('input').value = string;
+                        }
+                    }
+                    else if (e.target.innerHTML == 'AC') {
+                        string = "";
+                        document.querySelector('input').value = string;
+                    }
+                    else if (e.target.innerHTML == '√') {
+                        if (string < 0) {
+                            document.querySelector('input').value = "Invalid Input Value"
+                        }
+                        else {
+                            string = Math.sqrt(string);
+                            document.querySelector('input').value = string;
+                        }
+                    }
+                    else if (e.target.innerHTML == 'Del') {
+                        string = string.slice(0, string.length - 1)
+                        document.querySelector('input').value = string;
+                    }
+                    else {
+                        string = string + e.target.innerHTML;
+                        document.querySelector('input').value = string;
+                    }
+                }
+                catch {
+                    document.querySelector('input').value = "SYNTAX ERROR"
+                }
+            })
+        }
+        )
+
+    </script>
+
+</body>
+
+</html>
